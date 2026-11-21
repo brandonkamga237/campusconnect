@@ -1,0 +1,13 @@
+#!/bin/sh
+# Refuse tout commit dont le message contient un trailer "Co-authored-by".
+# Activation (une fois par clone) : git config core.hooksPath .githooks
+
+msg_file="$1"
+
+if grep -qiE '^[[:space:]]*co-authored-by:' "$msg_file"; then
+  echo "Commit refusé : les lignes 'Co-authored-by' sont interdites dans ce dépôt." >&2
+  echo "Retirez-les du message de commit puis réessayez." >&2
+  exit 1
+fi
+
+exit 0
