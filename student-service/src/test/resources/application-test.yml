@@ -1,0 +1,8 @@
+# Tests : pas de config-server ni d'Eureka ; la base vient de Testcontainers (@ServiceConnection).
+spring:
+  cloud:
+    config:
+      enabled: false
+eureka:
+  client:
+    enabled: false

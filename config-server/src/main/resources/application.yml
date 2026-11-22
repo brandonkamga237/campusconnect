@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: config-server
+
+  profiles:
+    active: ${CONFIG_SOURCE:native}
+
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: ${CONFIG_NATIVE_LOCATIONS:classpath:/configurations}
+
+        git:
+          uri: ${CONFIG_GIT_URI:}
+
+server:
+  port: 8888

@@ -13,6 +13,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
+import org.springframework.security.oauth2.server.resource.web.BearerTokenResolver;
+import org.springframework.security.oauth2.server.resource.web.DefaultBearerTokenResolver;
 import org.springframework.security.web.SecurityFilterChain;
 
 /**
@@ -30,8 +32,20 @@ public class SecurityConfig {
 				.authorizeHttpRequests(auth -> auth
 						.requestMatchers("/api/auth/**", "/actuator/**", "/error").permitAll()
 						.anyRequest().authenticated())
-				.oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
+				.oauth2ResourceServer(oauth2 -> oauth2
+						.bearerTokenResolver(bearerTokenResolver())
+						.jwt(Customizer.withDefaults()))
 				.build();
+	}
+
+	/**
+	 * Sur /api/auth/**, la gateway ignore l'en-tête Authorization et le transmet tel quel :
+	 * auth-service vérifie lui-même ses tokens. Sinon un token expiré envoyé par le client
+	 * ferait rejeter par la gateway jusqu'à /api/auth/login.
+	 */
+	private BearerTokenResolver bearerTokenResolver() {
+		DefaultBearerTokenResolver delegate = new DefaultBearerTokenResolver();
+		return request -> request.getRequestURI().startsWith("/api/auth/") ? null : delegate.resolve(request);
 	}
 
 	@Bean

@@ -1,0 +1,28 @@
+server:
+  port: 8081
+
+database:
+  url: ${AUTH_DB_URL:postgresql+psycopg://auth_user:auth@localhost:5432/auth_db}
+
+jwt:
+  issuer: campusconnect-auth
+  expiration-minutes: 60
+  refresh-expiration-days: 7
+
+auth:
+  max-failed-attempts: 5
+  lock-minutes: 15
+  require-verified-email: true
+  email-verification-hours: 24
+  password-reset-minutes: 30
+  frontend-url: ${FRONTEND_URL:http://localhost:3000}
+
+face:
+  match-threshold: 0.363
+  max-templates: 3
+  max-image-bytes: 5242880
+
+mail:
+  host: ${MAIL_HOST:localhost}
+  port: ${MAIL_PORT:1025}
+  from: "CampusConnect <no-reply@campusconnect.local>"

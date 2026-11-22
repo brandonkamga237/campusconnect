@@ -1,0 +1,8 @@
+server:
+  port: 8083
+
+spring:
+  datasource:
+    url: ${STUDENT_DB_URL:jdbc:postgresql://localhost:5433/student_db}
+    username: ${STUDENT_DB_USER:student_user}
+    password: ${STUDENT_DB_PASSWORD:student}

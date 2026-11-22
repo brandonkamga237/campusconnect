@@ -10,8 +10,8 @@ Point d'entrée unique : routage vers les services et vérification du JWT.
 
 | Route | Service | JWT requis |
 |---|---|---|
-| `/api/auth/**` | auth-service | non |
-| `/api/attendance/**` | attendance-service | oui |
+| `/api/auth/**` | auth-service | non (vérifié par auth-service) |
+| `/api/faculties/**`, `/api/departments/**`, `/api/fields/**`, `/api/academic-cycles/**`, `/api/study-levels/**` | student-service | oui |
 
 ## Lancer sans Docker
 

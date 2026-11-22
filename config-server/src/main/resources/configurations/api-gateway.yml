@@ -1,0 +1,17 @@
+server:
+  port: 8080
+spring:
+  cloud:
+    gateway:
+      server:
+        webmvc:
+          routes:
+          - id: auth-service
+            uri: lb://auth-service
+            predicates:
+            - Path=/api/auth/**
+
+          - id: student-service
+            uri: lb://student-service
+            predicates:
+            - Path=/api/faculties/**,/api/departments/**,/api/fields/**,/api/academic-cycles/**,/api/study-levels/**
